@@ -1,0 +1,34 @@
+package edu.br.utpfr.trabalho_pw44s.server.controller;
+
+import edu.br.utpfr.trabalho_pw44s.server.dto.PersonRequestDto;
+import edu.br.utpfr.trabalho_pw44s.server.dto.PersonResponseDto;
+import edu.br.utpfr.trabalho_pw44s.server.model.Person;
+import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
+import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
+import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.*;
+
+
+@RestController
+@RequestMapping("person")
+public class PersonController extends CrudController<Person, PersonRequestDto, PersonResponseDto, Long>{
+
+    private static IPersonService service;
+    private static ModelMapper mapper;
+
+    public PersonController(IPersonService service, ModelMapper mapper){
+        super(Person.class, PersonResponseDto.class, PersonRequestDto.class);
+        PersonController.service = service;
+        PersonController.mapper = mapper;
+    }
+
+    @Override
+    protected ICrudService<Person, Long> getService() {
+        return service;
+    }
+
+    @Override
+    protected ModelMapper getModelMapper() {
+        return mapper;
+    }
+}
