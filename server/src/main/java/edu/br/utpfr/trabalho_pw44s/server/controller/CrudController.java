@@ -6,6 +6,10 @@ import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,9 +57,6 @@ public abstract class CrudController <T, E, R, ID extends Serializable> {
 
     @PostMapping
     public ResponseEntity<R> save(@RequestBody @Valid E request){
-//        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{id}").buildAndExpand(entity.getId())
-//                .toUri();
         return ResponseEntity.status(HttpStatus.CREATED).body(convertEntityToResponse(getService().save(convertRequestToEntity(request))));
     }
 
@@ -68,6 +69,24 @@ public abstract class CrudController <T, E, R, ID extends Serializable> {
     @GetMapping
     public ResponseEntity<List<T>> findAll(){
         return ResponseEntity.ok(this.getService().findAll());
+    }
+
+    @GetMapping("page")
+    public ResponseEntity<Page<T>> findAll(@RequestParam("page") int page,
+                                           @RequestParam(name = "size", required = false) Integer size,
+                                           @RequestParam(name = "order", required = false) String order,
+                                           @RequestParam(name = "asc", required = false) Boolean asc){
+
+        if(size == null || size > 30 || size <= 0){
+            size = 30;
+        }
+
+        PageRequest pageRequest =PageRequest.of(page, size);
+
+        if(order != null && asc != null){
+            pageRequest = PageRequest.of(page, size, (asc ? Sort.Direction.ASC : Sort.Direction.DESC), order);
+        }
+        return ResponseEntity.ok().body(getService().findAll(pageRequest));
     }
 
     @GetMapping("{id}")

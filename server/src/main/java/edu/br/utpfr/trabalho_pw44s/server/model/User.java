@@ -1,14 +1,8 @@
 package edu.br.utpfr.trabalho_pw44s.server.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +12,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +23,8 @@ public class User {
     private String Username;
 
     @NotBlank
-    @Min(8) @Max(20)
+    @Min(6) @Max(20)
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
     private String password;
 
     @NotBlank
@@ -37,6 +32,6 @@ public class User {
     private String email;
 
     @OneToOne
-    @JoinColumn(name = "fk_person_user")
+    @JoinColumn(name = "person_user")
     private Person person;
 }

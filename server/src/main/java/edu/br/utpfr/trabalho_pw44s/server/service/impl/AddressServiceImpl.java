@@ -4,17 +4,14 @@ import edu.br.utpfr.trabalho_pw44s.server.dto.AddressRequestDto;
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
 import edu.br.utpfr.trabalho_pw44s.server.repository.AddressRepository;
+import edu.br.utpfr.trabalho_pw44s.server.repository.PersonRepository;
 import edu.br.utpfr.trabalho_pw44s.server.service.IAddressService;
-import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
+import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.apache.el.util.ReflectionUtil;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @RequiredArgsConstructor
 
@@ -23,16 +20,14 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
 
     private final AddressRepository repository;
     private final ModelMapper mapper;
-    private final PersonServiceImpl personService;
+    private final PersonRepository personRepository;
 
     @Override
     public Address save(AddressRequestDto requestDto) {
         Address address = mapper.map(requestDto, Address.class);
-        address.setPerson(personService.findById(requestDto.getPerson()));
-
+        address.setPerson(personRepository.findById(requestDto.getPerson()).orElseThrow(() -> new EntityNotFoundException("Person Nor Found!")));
         return this.repository.save(address);
     }
-
 
     @Override
     protected JpaRepository<Address, Long> getRepository() {
@@ -41,5 +36,8 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
 
     @Override
     public void delete(Iterable<? extends Address> iterable) {
+
     }
+
+
 }

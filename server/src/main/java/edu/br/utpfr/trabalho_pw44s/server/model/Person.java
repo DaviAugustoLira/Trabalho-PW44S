@@ -41,4 +41,5 @@ public class Person {
     @NotBlank
     @Pattern(regexp = "(?:(?:(\\+|00)?(55))\\s?)?(?:\\(?(\\d{2})\\)?\\s?)(|\\d{2})(|-)?(?:(9\\d|[2-9])\\d{3}[-|.|\\s]?(\\d{4}))")
     private String phone;
+
 }

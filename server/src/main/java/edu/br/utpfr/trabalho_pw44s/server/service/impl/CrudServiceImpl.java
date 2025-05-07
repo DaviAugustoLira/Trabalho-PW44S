@@ -56,14 +56,14 @@ public abstract class CrudServiceImpl <T, ID extends Serializable> implements IC
 
 
     @Override
-    public Iterable<T> save(Iterable<T> iterable) {
+    public List<T> save(Iterable<T> iterable) {
         return getRepository().saveAll(iterable);
     }
 
 
     @Override
     public T findById(ID id) {
-        return getRepository().findById(id).orElse(null);
+        return getRepository().findById(id).orElseThrow(() -> new EntityNotFoundException("Entity Not Found!"));
     }
 
     @Override
@@ -79,7 +79,7 @@ public abstract class CrudServiceImpl <T, ID extends Serializable> implements IC
 
     @Override
     public void delete(ID id) {
-        getRepository().findById(id).orElseThrow(() -> new EntityNotFoundException("Not Found!"));
+        getRepository().findById(id).orElseThrow(() -> new EntityNotFoundException("Entity Not Found!"));
         getRepository().deleteById(id);
     }
 

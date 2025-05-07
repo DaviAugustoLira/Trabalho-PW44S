@@ -20,7 +20,7 @@ public interface ICrudService<T, ID extends Serializable> {
 
     T updatePartialById(ID id, Map<String, Object> updates);
 
-    Iterable<T> save(Iterable<T> iterable);
+    List<T> save(Iterable<T> iterable);
 
     T findById(ID id);
 
