@@ -2,8 +2,6 @@ package edu.br.utpfr.trabalho_pw44s.server.controller;
 
 import edu.br.utpfr.trabalho_pw44s.server.dto.PersonRequestDto;
 import edu.br.utpfr.trabalho_pw44s.server.dto.PersonResponseDto;
-import edu.br.utpfr.trabalho_pw44s.server.dto.ProductRequestDto;
-import edu.br.utpfr.trabalho_pw44s.server.dto.ProductResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Person;
 import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
@@ -27,10 +25,10 @@ public class PersonController extends CrudController<Person, PersonRequestDto, P
         PersonController.mapper = mapper;
     }
 
-//    @PostMapping
-//    public ResponseEntity<PersonResponseDto> save(@RequestBody @Valid PersonRequestDto request){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(mapper.map(request, Person.class)));
-//    }
+    @PostMapping
+    public ResponseEntity<PersonResponseDto> save(@RequestBody @Valid PersonRequestDto request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(service.save(request), PersonResponseDto.class));
+    }
 
     @Override
     protected ICrudService<Person, Long> getService() {

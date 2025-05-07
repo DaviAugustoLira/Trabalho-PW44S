@@ -5,6 +5,7 @@ import edu.br.utpfr.trabalho_pw44s.server.model.Address;
 import edu.br.utpfr.trabalho_pw44s.server.model.Person;
 import edu.br.utpfr.trabalho_pw44s.server.repository.AddressRepository;
 import edu.br.utpfr.trabalho_pw44s.server.repository.PersonRepository;
+import edu.br.utpfr.trabalho_pw44s.server.repository.UserRepository;
 import edu.br.utpfr.trabalho_pw44s.server.service.IAddressService;
 import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
@@ -24,6 +25,15 @@ import java.util.List;
 @Service
 public class PersonServiceImpl extends CrudServiceImpl<Person, Long> implements IPersonService {
     private final PersonRepository repository;
+    private final UserRepository repositoryUser;
+    private final ModelMapper mapper;
+
+    @Override
+    public Person save(PersonRequestDto requestDto) {
+        Person person = mapper.map(requestDto, Person.class);
+        person.setUser(repositoryUser.findById(requestDto.getUser()).orElseThrow(() -> new EntityNotFoundException("Not Found!")));
+        return repository.save(person);
+    }
 
     @Override
     protected JpaRepository<Person, Long> getRepository() {
@@ -34,6 +44,4 @@ public class PersonServiceImpl extends CrudServiceImpl<Person, Long> implements 
     public void delete(Iterable<? extends Person> iterable) {
 
     }
-
-
 }

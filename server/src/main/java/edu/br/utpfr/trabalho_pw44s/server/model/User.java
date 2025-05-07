@@ -19,11 +19,11 @@ public class User{
     private long id;
 
     @NotBlank
-    @Min(4) @Max(25)
-    private String Username;
+    @Size(min = 6, max = 20)
+    private String username;
 
     @NotBlank
-    @Min(6) @Max(20)
+    @Size(min = 6, max = 20)
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
     private String password;
 
