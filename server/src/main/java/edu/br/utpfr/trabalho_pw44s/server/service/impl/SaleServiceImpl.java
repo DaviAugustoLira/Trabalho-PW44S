@@ -41,7 +41,6 @@ public class SaleServiceImpl extends CrudServiceImpl<Sale, Long> implements ISal
             productSale.setProduct(productService.findById(product.getProduct()));
             productSale.setQuantity(product.getQuantity());
             productSale.setPrice(product.getPrice());
-//            productSale.setSale(sale);
             products.add(productSale);
         });
 
@@ -49,6 +48,11 @@ public class SaleServiceImpl extends CrudServiceImpl<Sale, Long> implements ISal
 
         repository.save(sale);
         return this.repository.save(sale);
+    }
+
+    @Override
+    public List<Sale> findByBuiyerId(Long id) {
+        return repository.findByBuyerId(id);
     }
 
     @Override
