@@ -24,4 +24,5 @@ public class PersonResponseDto {
     private String ie;
     private String phone;
     private User user;
+    private List<AddressResponseDto> addresses;
 }

@@ -19,7 +19,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDto {
+    @NotNull
+    @Size(min = 4, max = 50)
     private String username;
+    @NotNull
+    @Size(min = 6)
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
     private String password;
+    @Email
     private String email;
 }

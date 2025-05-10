@@ -46,4 +46,9 @@ public class Person {
     @NotNull
     @OneToOne
     private User user;
+
+    @OneToMany
+    @JoinColumn
+    private List<Address> addresses;
+
 }
