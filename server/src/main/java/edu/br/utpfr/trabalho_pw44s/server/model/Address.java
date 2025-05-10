@@ -42,6 +42,6 @@ public class Address {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "person", nullable = false)
-    private Person person;
+    private User user;
 }
 

@@ -17,5 +17,5 @@ public class AddressRequestDto {
     private String street;
     private int number;
     private String cep;
-    private Long person;
+    private Long user;
 }

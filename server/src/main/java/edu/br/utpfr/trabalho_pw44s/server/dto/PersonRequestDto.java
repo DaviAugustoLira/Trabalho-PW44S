@@ -1,6 +1,7 @@
 package edu.br.utpfr.trabalho_pw44s.server.dto;
 
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
+import edu.br.utpfr.trabalho_pw44s.server.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class PersonRequestDto {
     private String rg;
     private String ie;
     private String phone;
+    private long user;
 }
