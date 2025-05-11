@@ -1,8 +1,5 @@
 package edu.br.utpfr.trabalho_pw44s.server.controller;
 
-import edu.br.utpfr.trabalho_pw44s.server.dto.PersonResponseDto;
-import edu.br.utpfr.trabalho_pw44s.server.dto.SaleResponseDto;
-import edu.br.utpfr.trabalho_pw44s.server.model.Person;
 import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
