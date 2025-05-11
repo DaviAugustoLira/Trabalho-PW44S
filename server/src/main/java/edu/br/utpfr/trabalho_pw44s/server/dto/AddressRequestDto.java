@@ -24,6 +24,4 @@ public class AddressRequestDto {
     private int number;
     @Pattern(regexp = "(^\\d{5})\\-?(\\d{3}$)")
     private String cep;
-    @NotNull
-    private Long user;
 }

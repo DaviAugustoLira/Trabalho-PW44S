@@ -33,7 +33,7 @@ public class Address {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "person", nullable = false)
+    @JoinColumn(nullable = false)
     private User user;
 }
 

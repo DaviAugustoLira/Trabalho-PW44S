@@ -11,25 +11,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
+
+//@RequiredArgsConstructor
 
 @RestController
 @RequestMapping("address")
 public class AddressController extends CrudController<Address, AddressRequestDto, AddressResponseDto, Long>{
 
-    private static IAddressService service;
-    private static ModelMapper mapper;
+    private final IAddressService service;
+    private final ModelMapper mapper;
 
     public AddressController(IAddressService service, ModelMapper mapper){
         super(Address.class, AddressResponseDto.class, AddressRequestDto.class);
-        AddressController.service = service;
-        AddressController.mapper = mapper;
+        this.service = service;
+        this.mapper = mapper;
     }
 
-    @PostMapping
-    public ResponseEntity<AddressResponseDto> save(@RequestBody @Valid AddressRequestDto request){
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(service.save(request), AddressResponseDto.class));
+    @PostMapping()
+    public ResponseEntity<AddressResponseDto> save(@RequestBody @Valid AddressRequestDto request, Principal principal){
+        AddressResponseDto responseDto = service.create(request, principal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
-
 
     @Override
     protected ICrudService<Address, Long> getService() {
@@ -40,6 +44,7 @@ public class AddressController extends CrudController<Address, AddressRequestDto
     protected ModelMapper getModelMapper() {
         return mapper;
     }
+
 }
 
 

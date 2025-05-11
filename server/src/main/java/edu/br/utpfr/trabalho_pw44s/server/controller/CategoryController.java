@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/category")
 public class CategoryController extends CrudController<Category, CategoryRequestDto, CategoryResponseDto, Long> {
 
-    private static ICategoryService service;
-    private static ModelMapper mapper;
+    private final ICategoryService service;
+    private final ModelMapper mapper;
 
     public CategoryController(ICategoryService service,
                               ModelMapper mapper) {
         super(Category.class, CategoryResponseDto.class, CategoryRequestDto.class);
-        CategoryController.service = service;
-        CategoryController.mapper = mapper;
+        this.service = service;
+        this.mapper = mapper;
     }
 
     @Override

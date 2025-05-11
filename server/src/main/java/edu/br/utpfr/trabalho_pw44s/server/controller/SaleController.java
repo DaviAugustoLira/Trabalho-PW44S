@@ -1,9 +1,6 @@
 package edu.br.utpfr.trabalho_pw44s.server.controller;
 
-import edu.br.utpfr.trabalho_pw44s.server.dto.ProductRequestDto;
-import edu.br.utpfr.trabalho_pw44s.server.dto.ProductResponseDto;
-import edu.br.utpfr.trabalho_pw44s.server.dto.SaleRequestDto;
-import edu.br.utpfr.trabalho_pw44s.server.dto.SaleResponseDto;
+import edu.br.utpfr.trabalho_pw44s.server.dto.*;
 import edu.br.utpfr.trabalho_pw44s.server.model.Product;
 import edu.br.utpfr.trabalho_pw44s.server.model.Sale;
 import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
@@ -15,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -22,18 +20,19 @@ import java.util.List;
 @RequestMapping("sale")
 public class SaleController extends CrudController<Sale, SaleRequestDto, SaleResponseDto, Long>{
 
-    private static ISaleService service;
-    private static ModelMapper mapper;
+    private final ISaleService service;
+    private final ModelMapper mapper;
 
     public SaleController(ISaleService service, ModelMapper mapper){
         super(Sale.class, SaleResponseDto.class, SaleRequestDto.class);
-        SaleController.service = service;
-        SaleController.mapper = mapper;
+        this.service = service;
+        this.mapper = mapper;
     }
 
-    @PostMapping
-    public ResponseEntity<SaleResponseDto> save(@RequestBody @Valid SaleRequestDto request){
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(service.save(request), SaleResponseDto.class));
+    @PostMapping()
+    public ResponseEntity<SaleResponseDto> save(@RequestBody @Valid SaleRequestDto request, Principal principal){
+        SaleResponseDto responseDto = service.create(request, principal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @GetMapping("buyer/{id}")

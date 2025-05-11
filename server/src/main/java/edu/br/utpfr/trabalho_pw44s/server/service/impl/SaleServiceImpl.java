@@ -2,9 +2,11 @@ package edu.br.utpfr.trabalho_pw44s.server.service.impl;
 
 import edu.br.utpfr.trabalho_pw44s.server.dto.ProductRequestDto;
 import edu.br.utpfr.trabalho_pw44s.server.dto.SaleRequestDto;
+import edu.br.utpfr.trabalho_pw44s.server.dto.SaleResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Product;
 import edu.br.utpfr.trabalho_pw44s.server.model.Product_Sale;
 import edu.br.utpfr.trabalho_pw44s.server.model.Sale;
+import edu.br.utpfr.trabalho_pw44s.server.model.User;
 import edu.br.utpfr.trabalho_pw44s.server.repository.ProductRepository;
 import edu.br.utpfr.trabalho_pw44s.server.repository.SaleRepository;
 import edu.br.utpfr.trabalho_pw44s.server.repository.UserRepository;
@@ -17,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,12 +36,16 @@ public class SaleServiceImpl extends CrudServiceImpl<Sale, Long> implements ISal
     private final ProductServiceImpl productService;
     private final ProductSaleServiceImpl productSaleService;
 
-    public Sale save(SaleRequestDto requestDto) {
-        Sale sale = mapper.map(requestDto, Sale.class);
-        sale.setAddress(addressService.findById(requestDto.getAddress()));
-        sale.setBuyer(userRepository.findById(requestDto.getBuyer()).orElseThrow(() -> new EntityNotFoundException("User Not Found")));
+    @Override
+    public SaleResponseDto create(SaleRequestDto request, Principal principal) {
+        User user = userRepository.findUserByUsername(principal.getName());
+        if(user == null) throw new EntityNotFoundException("User Not Found!");
 
-        List<Product_Sale> products = requestDto.getProducts().stream().map(product -> {
+        Sale sale = mapper.map(request, Sale.class);
+        sale.setBuyer(user);
+        sale.setAddress(addressService.findById(request.getAddress()));
+
+        List<Product_Sale> products = request.getProducts().stream().map(product -> {
             Product_Sale productSale = mapper.map(product, Product_Sale.class);
             productSale.setSale(sale);
             productSale.setProduct(productService.findById(product.getProduct()));
@@ -46,15 +53,15 @@ public class SaleServiceImpl extends CrudServiceImpl<Sale, Long> implements ISal
         }).collect(Collectors.toList());
 
         sale.setProducts(products);
-
-        repository.save(sale);
-        return this.repository.save(sale);
+        return mapper.map(save(sale), SaleResponseDto.class);
     }
 
     @Override
     public List<Sale> findByBuyerId(Long id) {
         return repository.findByBuyerId(id);
     }
+
+
 
     @Override
     protected JpaRepository<Sale, Long> getRepository() {

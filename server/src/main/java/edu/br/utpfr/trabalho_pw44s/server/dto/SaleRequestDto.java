@@ -17,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 public class SaleRequestDto {
 
-    @NotNull
-    private Long buyer;
+//    @NotNull
+//    private Long buyer;
     @NotNull
     private Long address;
     @NotNull

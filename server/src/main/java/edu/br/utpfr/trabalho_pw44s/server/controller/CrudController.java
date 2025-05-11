@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -61,13 +62,14 @@ public abstract class CrudController <T, E, R, ID extends Serializable> {
 
 
     @PostMapping
-    public ResponseEntity<R> save(@RequestBody @Valid E request){
+    public ResponseEntity<R> save(@RequestBody @Valid E request, Principal principal){
         return ResponseEntity.status(HttpStatus.CREATED).body(convertEntityToResponse(getService().save(convertRequestToEntity(request))));
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<R> update(@PathVariable ID id,
-                                                    @RequestBody Map<String, Object> updates){
+                                    @RequestBody Map<String, Object> updates,
+                                    Principal principal){
         return ResponseEntity.ok().body(convertEntityToResponse(getService().updatePartialById(id, updates)));
     }
 
@@ -105,13 +107,13 @@ public abstract class CrudController <T, E, R, ID extends Serializable> {
         this.getService().delete(id);
     }
 
-    @GetMapping("exists/{id}")
-    public ResponseEntity<Boolean> exists(@PathVariable ID id){
-        return ResponseEntity.ok().body(getService().exists(id));
-    }
-
-    @GetMapping("count")
-    public ResponseEntity<Long> count(){
-        return ResponseEntity.ok().body(getService().count());
-    }
+//    @GetMapping("exists/{id}")
+//    public ResponseEntity<Boolean> exists(@PathVariable ID id){
+//        return ResponseEntity.ok().body(getService().exists(id));
+//    }
+//
+//    @GetMapping("count")
+//    public ResponseEntity<Long> count(){
+//        return ResponseEntity.ok().body(getService().count());
+//    }
 }

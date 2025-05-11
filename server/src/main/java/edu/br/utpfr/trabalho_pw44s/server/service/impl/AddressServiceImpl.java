@@ -3,17 +3,17 @@ package edu.br.utpfr.trabalho_pw44s.server.service.impl;
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressRequestDto;
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
+import edu.br.utpfr.trabalho_pw44s.server.model.User;
 import edu.br.utpfr.trabalho_pw44s.server.repository.AddressRepository;
-import edu.br.utpfr.trabalho_pw44s.server.repository.PersonRepository;
 import edu.br.utpfr.trabalho_pw44s.server.repository.UserRepository;
 import edu.br.utpfr.trabalho_pw44s.server.service.IAddressService;
-import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
-import edu.br.utpfr.trabalho_pw44s.server.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @RequiredArgsConstructor
 
@@ -25,10 +25,19 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
     private final UserRepository userRepository;
 
     @Override
-    public Address save(AddressRequestDto requestDto) {
-        Address address = mapper.map(requestDto, Address.class);
-        address.setUser(userRepository.findById(requestDto.getUser()).orElseThrow(() -> new EntityNotFoundException("Person Nor Found!")));
+    public Address save(Address address) {
         return this.repository.save(address);
+    }
+
+    @Override
+    public AddressResponseDto create(AddressRequestDto request, Principal principal) {
+        User user = userRepository.findUserByUsername(principal.getName());
+        if(user == null) throw new EntityNotFoundException("User Not Found!");
+        Address address = mapper.map(request, Address.class);
+        address.setUser(user);
+
+        Address save = save(address);
+        return mapper.map(save, AddressResponseDto.class);
     }
 
     @Override
