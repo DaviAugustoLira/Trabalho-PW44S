@@ -1,6 +1,7 @@
 package edu.br.utpfr.trabalho_pw44s.server.service.impl;
 
 import edu.br.utpfr.trabalho_pw44s.server.dto.PersonRequestDto;
+import edu.br.utpfr.trabalho_pw44s.server.error.exception.Conflict;
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
 import edu.br.utpfr.trabalho_pw44s.server.model.Person;
 import edu.br.utpfr.trabalho_pw44s.server.repository.AddressRepository;
@@ -11,6 +12,7 @@ import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +30,12 @@ public class PersonServiceImpl extends CrudServiceImpl<Person, Long> implements 
     private final UserRepository repositoryUser;
     private final ModelMapper mapper;
 
+    @SneakyThrows
     @Override
     public Person save(PersonRequestDto requestDto) {
         Person person = mapper.map(requestDto, Person.class);
-        person.setUser(repositoryUser.findById(requestDto.getUser()).orElseThrow(() -> new EntityNotFoundException("Not Found!")));
+        person.setUser(repositoryUser.findById(requestDto.getUser()).orElseThrow(() -> new EntityNotFoundException("User Not Found")));
+        if(repository.existsByCpfOrCnpj(requestDto.getCpf(), requestDto.getCnpj())) throw new Conflict("Conflict Person document");
         return repository.save(person);
     }
 
