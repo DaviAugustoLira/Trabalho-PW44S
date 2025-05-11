@@ -15,6 +15,4 @@ import lombok.Setter;
 public class CategoryRequestDto {
 
     private String name;
-    @Nullable
-    private Category dad;
 }

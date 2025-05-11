@@ -5,8 +5,10 @@ import edu.br.utpfr.trabalho_pw44s.server.dto.AddressResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
 import edu.br.utpfr.trabalho_pw44s.server.repository.AddressRepository;
 import edu.br.utpfr.trabalho_pw44s.server.repository.PersonRepository;
+import edu.br.utpfr.trabalho_pw44s.server.repository.UserRepository;
 import edu.br.utpfr.trabalho_pw44s.server.service.IAddressService;
 import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
+import edu.br.utpfr.trabalho_pw44s.server.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,12 +22,12 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
 
     private final AddressRepository repository;
     private final ModelMapper mapper;
-    private final PersonRepository personRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Address save(AddressRequestDto requestDto) {
         Address address = mapper.map(requestDto, Address.class);
-        address.setPerson(personRepository.findById(requestDto.getPerson()).orElseThrow(() -> new EntityNotFoundException("Person Nor Found!")));
+        address.setUser(userRepository.findById(requestDto.getUser()).orElseThrow(() -> new EntityNotFoundException("Person Nor Found!")));
         return this.repository.save(address);
     }
 

@@ -2,6 +2,7 @@ package edu.br.utpfr.trabalho_pw44s.server.dto;
 
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
 import edu.br.utpfr.trabalho_pw44s.server.model.User;
+import edu.br.utpfr.trabalho_pw44s.server.security.dto.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,5 @@ public class PersonResponseDto {
     private String rg;
     private String ie;
     private String phone;
-    private User user;
-    private List<AddressResponseDto> addresses;
+    private UserResponseDTO user;
 }

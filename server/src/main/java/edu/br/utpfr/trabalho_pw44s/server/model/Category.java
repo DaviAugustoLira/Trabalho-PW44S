@@ -24,7 +24,4 @@ public class Category {
 
     @NotBlank
     private String name;
-
-    @ManyToOne(optional = true)
-    private Category dad;
 }

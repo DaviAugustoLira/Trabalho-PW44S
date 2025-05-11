@@ -1,5 +1,6 @@
 package edu.br.utpfr.trabalho_pw44s.server.error;
 
+import edu.br.utpfr.trabalho_pw44s.server.error.exception.Conflict;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,8 +51,17 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler({EntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError handlerNotFoundException(HttpServletRequest request) {
-        return new ApiError(HttpStatus.NOT_FOUND.value(), "Not Found!",
+    public ApiError handlerNotFoundException(EntityNotFoundException exception,
+                                             HttpServletRequest request) {
+        return new ApiError(HttpStatus.NOT_FOUND.value(), exception.getMessage(),
+                request.getServletPath(), null);
+    }
+
+    @ExceptionHandler({Conflict.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handlerConflictException(Conflict exception,
+                                             HttpServletRequest request) {
+        return new ApiError(HttpStatus.CONFLICT.value(), exception.getMessage(),
                 request.getServletPath(), null);
     }
 
