@@ -1,6 +1,7 @@
 package edu.br.utpfr.trabalho_pw44s.server.controller;
 
 import edu.br.utpfr.trabalho_pw44s.server.dto.PersonResponseDto;
+import edu.br.utpfr.trabalho_pw44s.server.dto.SaleResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Person;
 import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import jakarta.validation.Valid;
@@ -51,6 +52,13 @@ public abstract class CrudController <T, E, R, ID extends Serializable> {
         return getModelMapper().map(entityDto, this.typeRequestDto);
     }
 
+    private List<R> convertListEntityToLitsResponse(List<T> responseDto) {
+        return responseDto
+                .stream()
+                .map(sale -> getModelMapper().map(sale, this.typeResponseDto))
+                .toList();
+    }
+
 
     @PostMapping
     public ResponseEntity<R> save(@RequestBody @Valid E request){
@@ -64,8 +72,8 @@ public abstract class CrudController <T, E, R, ID extends Serializable> {
     }
 
     @GetMapping
-    public ResponseEntity<List<T>> findAll(){
-        return ResponseEntity.ok(this.getService().findAll());
+    public ResponseEntity<List<R>> findAll(){
+        return ResponseEntity.ok(convertListEntityToLitsResponse(this.getService().findAll()));
     }
 
     @GetMapping("page")

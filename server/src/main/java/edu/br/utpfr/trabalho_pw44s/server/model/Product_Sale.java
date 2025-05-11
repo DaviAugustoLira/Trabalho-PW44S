@@ -1,9 +1,7 @@
 package edu.br.utpfr.trabalho_pw44s.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,19 +23,16 @@ public class Product_Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "sale_id")
-//    private Sale sale;
+    @ManyToOne
+    @JoinColumn(name = "sale_id")
+    @JsonIgnore
+    private Sale sale;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
-    @NotNull
-    @Min(1)
     private float quantity;
-
-    @NotNull
-    @DecimalMin("0.1")
     private BigDecimal price;
 }

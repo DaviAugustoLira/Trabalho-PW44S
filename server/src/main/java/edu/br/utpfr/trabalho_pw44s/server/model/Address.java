@@ -26,17 +26,9 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotBlank
     private String city;
-
-    @NotBlank
     private String street;
-
-    @Min(1)
     private int number;
-
-    @Pattern(regexp = "(^\\d{5})\\-?(\\d{3}$)")
     private String cep;
 
     @JsonIgnore

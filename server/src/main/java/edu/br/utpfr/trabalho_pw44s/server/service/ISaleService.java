@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ISaleService extends ICrudService<Sale, Long>{
     Sale save(SaleRequestDto requestDto);
-    List<Sale> findByBuiyerId(Long id);
+    List<Sale> findByBuyerId(Long id);
 }

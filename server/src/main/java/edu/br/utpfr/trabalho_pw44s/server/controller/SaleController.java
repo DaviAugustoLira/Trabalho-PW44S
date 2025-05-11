@@ -38,7 +38,11 @@ public class SaleController extends CrudController<Sale, SaleRequestDto, SaleRes
 
     @GetMapping("buyer/{id}")
     public ResponseEntity<List<SaleResponseDto>> save(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(service.findByBuiyerId(id), List.class));
+        List<SaleResponseDto> dtoList = service.findByBuyerId(id)
+                .stream()
+                .map(sale -> mapper.map(sale, SaleResponseDto.class))
+                .toList();
+        return ResponseEntity.ok(dtoList);
     }
 
 

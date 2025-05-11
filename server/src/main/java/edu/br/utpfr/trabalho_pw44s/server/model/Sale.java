@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,21 +30,16 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "buyer")
-    private Person buyer;
-
+    private User buyer;
     @ManyToOne
     @JoinColumn(name = "address")
     private Address address;
-
-    @NotNull
-    @Min(1)
     private BigDecimal total_value;
 
-    @ManyToMany
-    private List<Product_Sale> products;
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    private List<Product_Sale> products = new ArrayList<>();
 
     @CreatedDate
     private LocalDateTime data;

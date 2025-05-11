@@ -23,37 +23,18 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+
     private String sku;
-
-    @NotBlank
     private String name;
-
     private String description;
-
-    @NotNull
-    @Min(1)
     private BigDecimal retail_value;
-
-    @NotNull
-    @Min(1)
     private BigDecimal wholesale_value;
-
-    @NotNull
-    @Min(1)
     private float wholesale_min_quantity;
-
-    @NotNull
-    @Min(1)
     private float stock;
-
-    @NotNull
     private boolean free_freight;
-
     private boolean isActive;
-
-    @ManyToOne
+    private String urlImage;
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_category")
     private Category category;
-
 }

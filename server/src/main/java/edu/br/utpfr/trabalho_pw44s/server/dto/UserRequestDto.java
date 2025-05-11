@@ -26,6 +26,7 @@ public class UserRequestDto {
     @Size(min = 6)
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
     private String password;
+    @NotNull
     @Email
     private String email;
 }
