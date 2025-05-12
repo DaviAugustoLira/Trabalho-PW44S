@@ -11,8 +11,6 @@ import java.security.Principal;
 import java.util.List;
 
 public interface ISaleService extends ICrudService<Sale, Long>{
-//    Sale save(SaleRequestDto requestDto);
     List<Sale> findByBuyer(Principal principal);
-
     SaleResponseDto create(SaleRequestDto request, Principal principal);
 }

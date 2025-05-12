@@ -2,7 +2,9 @@ package edu.br.utpfr.trabalho_pw44s.server.controller;
 
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressRequestDto;
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressResponseDto;
+import edu.br.utpfr.trabalho_pw44s.server.dto.SaleResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
+import edu.br.utpfr.trabalho_pw44s.server.model.User;
 import edu.br.utpfr.trabalho_pw44s.server.service.IAddressService;
 import edu.br.utpfr.trabalho_pw44s.server.service.ICrudService;
 import jakarta.validation.Valid;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 //@RequiredArgsConstructor
@@ -34,6 +37,17 @@ public class AddressController extends CrudController<Address, AddressRequestDto
         AddressResponseDto responseDto = service.create(request, principal);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
+
+    @GetMapping("person")
+    public ResponseEntity<List<AddressResponseDto>> getAddressByUser(Principal principal){
+        List<AddressResponseDto> dtoList = service.findAllByUsername(principal)
+                .stream()
+                .map(sale -> mapper.map(sale, AddressResponseDto.class))
+                .toList();
+        return ResponseEntity.ok(dtoList);
+    }
+
+
 
     @Override
     protected ICrudService<Address, Long> getService() {

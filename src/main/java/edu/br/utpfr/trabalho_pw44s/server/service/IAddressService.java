@@ -12,4 +12,5 @@ import java.util.List;
 public interface IAddressService extends ICrudService<Address, Long>{
     Address save(Address address);
     AddressResponseDto create(AddressRequestDto request, Principal principal);
+    List<Address> findAllByUsername(Principal principal);
 }

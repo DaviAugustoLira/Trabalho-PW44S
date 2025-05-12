@@ -2,6 +2,7 @@ package edu.br.utpfr.trabalho_pw44s.server.service.impl;
 
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressRequestDto;
 import edu.br.utpfr.trabalho_pw44s.server.dto.AddressResponseDto;
+import edu.br.utpfr.trabalho_pw44s.server.dto.SaleResponseDto;
 import edu.br.utpfr.trabalho_pw44s.server.model.Address;
 import edu.br.utpfr.trabalho_pw44s.server.model.User;
 import edu.br.utpfr.trabalho_pw44s.server.repository.AddressRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequiredArgsConstructor
 
@@ -38,6 +40,12 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
 
         Address save = save(address);
         return mapper.map(save, AddressResponseDto.class);
+    }
+
+    @Override
+    public List<Address> findAllByUsername(Principal principal) {
+        User user = userRepository.findUserByUsername(principal.getName());
+        return repository.findByUserId(user.getId());
     }
 
     @Override

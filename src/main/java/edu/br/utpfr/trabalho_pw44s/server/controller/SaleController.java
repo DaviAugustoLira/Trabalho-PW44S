@@ -36,7 +36,7 @@ public class SaleController extends CrudController<Sale, SaleRequestDto, SaleRes
     }
 
     @GetMapping("buyer")
-    public ResponseEntity<List<SaleResponseDto>> save(Principal principal){
+    public ResponseEntity<List<SaleResponseDto>> getAllByUser(Principal principal){
         List<SaleResponseDto> dtoList = service.findByBuyer(principal)
                 .stream()
                 .map(sale -> mapper.map(sale, SaleResponseDto.class))
