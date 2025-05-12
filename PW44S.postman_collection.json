@@ -49,44 +49,6 @@
 					"response": []
 				},
 				{
-					"name": "Alterar Endereco",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"city\": \"Francisco Beltrão\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/address/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"address",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Buscar Todos os Endereços",
 					"request": {
 						"auth": {
@@ -116,15 +78,22 @@
 					"response": []
 				},
 				{
-					"name": "Bucar Endereço por ID",
+					"name": "Bucar Endereço Usuário Autenticado",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/address/:=",
+							"raw": "http://localhost:8080/address/person",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -132,42 +101,7 @@
 							"port": "8080",
 							"path": [
 								"address",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deletar Endereco por ID",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/address/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"address",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
+								"person"
 							]
 						}
 					},
@@ -195,7 +129,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Joao\",\n    \"cpf\": \"09177204905\",\n    \"rg\": \"1482692514\",\n    \"ie\": null,\n    \"cnpj\": null,\n    \"phone\": \"5546911330499\",\n    \"user\": 1\n}",
+							"raw": "{\n    \"name\": \"Joao\",\n    \"cpf\": \"09177204905\",\n    \"rg\": \"1482692514\",\n    \"ie\": null,\n    \"cnpj\": null,\n    \"phone\": \"5546911330499\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -211,44 +145,6 @@
 							"port": "8080",
 							"path": [
 								"person"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Alterar Pessoa",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Julia\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/person/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"person",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -311,42 +207,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Deletar Pessoa pelo ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/person/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"person",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -385,44 +245,6 @@
 					"response": []
 				},
 				{
-					"name": "Alterar Categoria",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"outro car\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/category/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"category",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Buscar todas as Categorias",
 					"request": {
 						"auth": {
@@ -448,52 +270,9 @@
 					"name": "Buscar Categoria pelo ID",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/category/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"category",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deletar Categoria pelo ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/category/:=",
@@ -652,35 +431,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Deletar Produto por ID",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/product/:=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"product",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -704,7 +454,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"buyer\": 1,\n    \"address\": 1,\n    \"total_value\": 1,\n    \"products\": [\n        {\n            \"product\": 1,\n            \"quantity\": 1,\n            \"price\": 1\n        }\n    ]\n}",
+							"raw": "{\n    \"address\": 1,\n    \"total_value\": 1,\n    \"products\": [\n        {\n            \"product\": 1,\n            \"quantity\": 1,\n            \"price\": 1\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -812,7 +562,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb2FvU2lsdmEiLCJleHAiOjE3NDcxNzUxMjd9.Xg0K1cVZwNtWr9sEPH9-CT7A25WC-iXeUzNkZIKMYWLypJ5yNa7N7re8Z7rpapfNCVPWLvwUFQuRRG-4v4Sf6A",
 									"type": "string"
 								}
 							]
@@ -820,7 +570,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/sale/buyer/:=",
+							"raw": "http://localhost:8080/sale/buyer",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -828,14 +578,7 @@
 							"port": "8080",
 							"path": [
 								"sale",
-								"buyer",
-								":="
-							],
-							"variable": [
-								{
-									"key": "=",
-									"value": "1"
-								}
+								"buyer"
 							]
 						}
 					},
