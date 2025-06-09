@@ -28,4 +28,5 @@ public class ProductResponseDto {
     private boolean isActive;
     private Category category;
     private String urlImage;
+    private boolean top;
 }

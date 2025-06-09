@@ -11,14 +11,13 @@ import edu.br.utpfr.trabalho_pw44s.server.service.IPersonService;
 import edu.br.utpfr.trabalho_pw44s.server.service.IProductService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @RestController
@@ -39,7 +38,17 @@ public class ProductController extends CrudController<Product, ProductRequestDto
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(service.save(request), ProductResponseDto.class));
     }
 
+    @GetMapping("find")
+    public ResponseEntity<List<Product>> findAll(@RequestParam(value = "isTop", required = false) Boolean top) {
+        List<Product> topProducts = service.getProducts(top);
+        return ResponseEntity.ok(topProducts);
+    }
 
+    @GetMapping("category/{id}")
+    public ResponseEntity<List<Product>> findByCategory(@PathVariable Long id) {
+        List<Product> topProducts = service.getProductsByCategory(id);
+        return ResponseEntity.ok(topProducts);
+    }
 
     @Override
     protected ICrudService<Product, Long> getService() {

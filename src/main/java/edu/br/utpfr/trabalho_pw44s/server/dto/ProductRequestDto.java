@@ -43,4 +43,5 @@ public class ProductRequestDto {
     @NotNull
     private Long category;
     private String urlImage;
+    private boolean top;
 }

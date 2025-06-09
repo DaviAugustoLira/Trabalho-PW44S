@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 
 @Service
@@ -27,6 +29,18 @@ public class ProductServiceImpl extends CrudServiceImpl<Product, Long> implement
         product.setCategory(categoryService.findById(requestDto.getCategory()));
 
         return this.repository.save(product);
+    }
+
+    public List<Product> getProducts(Boolean isTop) {
+        if(isTop == null){
+            return repository.findAll();
+        }
+        return repository.findByTop(isTop);
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(Long id) {
+        return repository.findByCategory_Id(id);
     }
 
     @Override

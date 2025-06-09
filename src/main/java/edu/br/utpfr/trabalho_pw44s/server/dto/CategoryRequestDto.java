@@ -16,4 +16,5 @@ import lombok.Setter;
 public class CategoryRequestDto {
     @NotBlank
     private String name;
+    private boolean top;
 }

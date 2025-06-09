@@ -2,6 +2,7 @@ package edu.br.utpfr.trabalho_pw44s.server.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,8 +34,10 @@ public class Product {
     private float stock;
     private boolean free_freight;
     private boolean isActive;
+    @Column(length = 1024)
     private String urlImage;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_category")
     private Category category;
+    private boolean top;
 }

@@ -31,4 +31,12 @@ public class CategoryServiceImpl extends CrudServiceImpl<Category, Long> impleme
     public void delete(Iterable<? extends Category> iterable) {
 
     }
+
+    @Override
+    public List<Category> getCategories(Boolean isTop) {
+        if(isTop == null){
+            return repository.findAll();
+        }
+        return repository.findByTop(isTop);
+    }
 }
